@@ -1,8 +1,11 @@
+import NavBar from "../components/parkmade/NavBar";
+import Boards from "../components/parkmade/mainPage/Boards";
 
 function Main() {
   return (
-    <div>
-      Main
+    <div style={{height:"3000px"}}>
+      <NavBar />
+      <Boards />
     </div>
   );
 }
