@@ -4,7 +4,7 @@ import NavBar from "../components/parkmade/NavBar";
 
 function MyProfile() {
   return (
-    <div style={{height:"3000px"}}>
+    <div>
       <NavBar />
       <Profile />
       <Selector />

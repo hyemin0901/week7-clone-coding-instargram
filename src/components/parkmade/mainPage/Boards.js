@@ -1,3 +1,4 @@
+import { useQuery } from "react-query";
 import styled from "styled-components";
 import Board from "./Board";
 
@@ -12,6 +13,7 @@ const Div = styled.div`
 
 const Boards = () => {
   const test = [1,2,3,4,5,6]
+  // const { isLoading, data } = useQuery();
   return (
     <Wrap>
       <Div>

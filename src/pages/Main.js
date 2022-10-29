@@ -3,7 +3,7 @@ import Boards from "../components/parkmade/mainPage/Boards";
 
 function Main() {
   return (
-    <div style={{height:"3000px"}}>
+    <div>
       <NavBar />
       <Boards />
     </div>
