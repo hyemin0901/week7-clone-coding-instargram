@@ -78,7 +78,7 @@ const Selector = () => {
             </Link>
           </SelectorDiv>
         </UpperSelectorDiv>
-        <Outlet />
+        <Outlet/>
       </UpperDiv>
     </Wrap>
   );
