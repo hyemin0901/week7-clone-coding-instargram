@@ -1,7 +1,6 @@
 import styled from "styled-components";
 import pepe from "../../img/icons8-monkas-48.png"
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
 
 const Upper = styled.div`
   width: 100%;
@@ -30,6 +29,7 @@ const UpperImg = styled.div`
   width: 333.5px;
   display: flex;
   align-items: center;
+  cursor: pointer;
 `;
 const UpperInput = styled.div`
   width: 268px;
@@ -61,6 +61,7 @@ const NavDivFir = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
 `;
 const NavDivSec = styled.div`
   height: 24px;
@@ -69,6 +70,7 @@ const NavDivSec = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
 `;
 const ProfileImg = styled.img`
   width: 24px;
@@ -78,7 +80,7 @@ const ProfileImg = styled.img`
 `;
 
 // 나중에 서버연결하고 toProfile 함수 수정해야됨 :id값
-const NavBar = ({setIsModalOpen, isModalOpen}) => {
+const NavBar = ({setIsModalOpen}) => {
   const navigate = useNavigate();
   const toMain = () => {
     navigate("/main")

@@ -1,4 +1,4 @@
-import { AnimatePresence, motion } from "framer-motion";
+import { motion } from "framer-motion";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import styled from "styled-components";
@@ -70,6 +70,9 @@ const ChoiceImgBtn = styled.button`
   color: white;
   font-size: 14px;
 `;
+const CountFiles = styled.div`
+  margin-top: 10px;
+`;
 const DropInput = styled.input`
   width: 100%;
   height: 100%;
@@ -108,6 +111,7 @@ const PostingBtn = styled.button`
   font-size: 14px;
   font-weight: 600;
   color: rgb(0, 149, 246);
+  cursor: pointer;
 `;
 const TextingArea = styled.div`
   width: 100%;
@@ -293,10 +297,13 @@ const PostingModal = ({setIsModalOpen}) => {
                 사진과 동영상을 여기에 끌어다 놓으세요
               </div>
               <div style={{display:"flex", justifyContent:"center", height:"30px", marginTop:"15px"}}>
-                <ChoiceImgBtn>
-                  컴퓨터에서 선택
-                </ChoiceImgBtn>
+              <ChoiceImgBtn>
+                컴퓨터에서 선택
+              </ChoiceImgBtn>
               </div>
+              <CountFiles>
+                {`등록한 사진 수 : ${fileList.length}`}
+              </CountFiles>
             </OverlapDiv>
             <DropInput type="file" onChange={onFileDrop} />
           </GetImgDiv>

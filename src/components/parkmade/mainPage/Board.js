@@ -2,6 +2,8 @@ import styled from "styled-components";
 import pepe from "../../../img/icons8-monkas-48.png"
 import { useForm } from "react-hook-form";
 import { useMutation } from "react-query";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const UpperDiv = styled.div`
   width: 468px;
@@ -24,6 +26,7 @@ const WriterDiv = styled.div`
   font-size: 14px;
   font-weight: 600;
   color: rgb(38, 38, 38);
+  cursor: pointer;
 `;
 const WriterImgDiv = styled.div`
   display: flex;
@@ -45,6 +48,8 @@ const ThreeDot = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  position: relative;
+  cursor: pointer;
 `;
 
 const UpperMedia = styled.div`
@@ -72,6 +77,7 @@ const UpperIcon = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
 `;
 const BookMark = styled.div`
   width: 40px;
@@ -108,6 +114,7 @@ const Comments = styled.div`
   font-weight: 400;
   font-size: 14px;
   color: rgb(142, 142, 142);
+  cursor: pointer;
 `;
 const Date = styled.div`
   width: 445px;
@@ -129,6 +136,7 @@ const Smile = styled.div`
   width: 24px;
   height: 24px;
   padding: 8px 12px 8px 0px;
+  cursor: pointer;
 `;
 const Form = styled.form`
   display: flex;
@@ -160,12 +168,18 @@ const PostBtn = styled.button`
   // color 인풋창 클릭시 rgb(0, 149, 246)
   font-weight: 600;
   background-color: white;
+  cursor: pointer;
 `;
 
-const Board = () => {
+const Board = ({setIsDeleteModalOpen}) => {
+  const navigate = useNavigate();
+  const [toDelete, setToDelete] = useState(false);
   const { setValue, getValues, handleSubmit, register } = useForm();
   // const { mutate:write } = useMutation();
   // const { mutate:hart } = useMutation();
+  const deleteModalOpen = () => {
+    setIsDeleteModalOpen(true)
+  }
   const writeComment = () => {
     // write()
   }
@@ -178,16 +192,17 @@ const Board = () => {
   const skip = () => {
     alert("이 기능은 생략합니다.")
   }
+  const goToProfile = () => { navigate(`/my-profile/${1}`) }
   return (
     <UpperDiv>
       <UpperWriterDiv>
-        <WriterDiv>
+        <WriterDiv onClick={goToProfile}>
           <WriterImgDiv>
             <WriterImg src={pepe} style={{height:"32px",width:"32px"}}/>
           </WriterImgDiv>
-          작성자 이름
+          {`작성자 이름`}
         </WriterDiv>
-        <ThreeDot>
+        <ThreeDot onClick={deleteModalOpen}>
           <svg aria-label="옵션 더 보기" color="#262626" fill="#262626" height="24" role="img" viewBox="0 0 24 24" width="24">
             <circle cx="12" cy="12" r="1.5"></circle><circle cx="6" cy="12" r="1.5"></circle>
             <circle cx="18" cy="12" r="1.5"></circle>
@@ -232,7 +247,7 @@ const Board = () => {
           <WriterSpan>
           {`작성자 박씨`}
           </WriterSpan>
-          {`이곳은 작성한 내용이들어간다. 워드 브레이키 설정해놈 ㅋ`}
+          {`이곳은 작성한 내용이들어간다. 워드 브레잌 설정해놈 ㅋ`}
         </WriterContent>
         <Comments onClick={toDetail}>
           댓글 모두 보기
@@ -243,7 +258,7 @@ const Board = () => {
         </Date>
       </UpperContents>
       <WriteDiv>
-        <Smile>
+        <Smile onClick={skip}>
           <svg aria-label="이모티콘" color="#262626" fill="#262626" height="24" role="img" viewBox="0 0 24 24" width="24">
             <path d="M15.83 10.997a1.167 1.167 0 1 0 1.167 1.167 1.167 1.167 0 0 0-1.167-1.167Zm-6.5 1.167a1.167 1.167 0 1 0-1.166 1.167 1.167 1.167 0 0 0 1.166-1.167Zm5.163 3.24a3.406 3.406 0 0 1-4.982.007 1 1 0 1 0-1.557 1.256 5.397 5.397 0 0 0 8.09 0 1 1 0 0 0-1.55-1.263ZM12 .503a11.5 11.5 0 1 0 11.5 11.5A11.513 11.513 0 0 0 12 .503Zm0 21a9.5 9.5 0 1 1 9.5-9.5 9.51 9.51 0 0 1-9.5 9.5Z"></path>
           </svg>
