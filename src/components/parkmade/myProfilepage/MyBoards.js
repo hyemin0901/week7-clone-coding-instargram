@@ -1,7 +1,4 @@
-import { useState } from "react";
-import { useQuery } from "react-query";
 import styled from "styled-components";
-import PostingModal from "../PostingModal";
 import EmptyBoards from "./EmptyBoards";
 
 const WrapOne = styled.div`

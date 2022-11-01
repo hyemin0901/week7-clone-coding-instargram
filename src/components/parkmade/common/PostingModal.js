@@ -1,8 +1,10 @@
 import { motion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
+import { useMutation } from "react-query";
 import styled from "styled-components";
-import pepe from "../../img/icons8-monkas-48.png"
+import { postBoard } from "../../../api";
+import pepe from "../../../img/icons8-monkas-48.png"
 
 const Wrap = styled.div`
   position: fixed;
@@ -248,6 +250,15 @@ const PostingModal = ({isModalOpen, setIsModalOpen}) => {
   const [fileList, setFileList] = useState([]);
   const [fileUrlList, setFileUrlList] = useState([]);
   const { register, handleSubmit, setValue, getValues } = useForm();
+  const { mutate } = useMutation(postBoard, {
+    onSuccess: (res) => {
+      alert("게시글 등록 완료!");
+      setIsModalOpen(false)
+      setFileList([]);
+      setFileUrlList([]);
+      setValue("text", "")
+    }
+  });
   const nextStepOne = () => { 
     if (fileList.length) {
       setFirStep(false)
@@ -266,15 +277,13 @@ const PostingModal = ({isModalOpen, setIsModalOpen}) => {
       setFileUrlList(updatedUrl);
     }
   }
-  const submit = () => {
-    // mutate 쓰자 그래서 아래 셋이즈를 뮤테이트 통신 성공시 작동하게끔.
-    // getValues("text")
-    // fileList
-    // 위 두개를 new FormData() 사용해서 보냄
-    setIsModalOpen(false)
-    setFileList([]);
-    setFileUrlList([]);
-    setValue("text", "")
+  const submit = (data) => {
+    // 벡엔드 줄때 블랍을 디폴트로생각해야 할듯.
+    const blob = new Blob([JSON.stringify({"content":data.text})], {type: "application/json" })
+    const formData = new FormData();
+    fileList.map((prop)=> formData.append("file", prop));
+    formData.append("post", blob);
+    mutate(formData);
   }
   useEffect(() => {
     document.addEventListener('mousedown', clickModalOutside);

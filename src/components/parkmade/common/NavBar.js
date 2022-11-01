@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import pepe from "../../img/icons8-monkas-48.png"
+import pepe from "../../../img/icons8-monkas-48.png"
 import { useNavigate } from "react-router-dom";
 
 const Upper = styled.div`

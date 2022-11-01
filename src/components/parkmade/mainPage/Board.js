@@ -4,6 +4,8 @@ import { useForm } from "react-hook-form";
 import { useMutation } from "react-query";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { getUserId } from "../../../store/modules/parkmade/getIds";
 
 const UpperDiv = styled.div`
   width: 468px;
@@ -50,13 +52,15 @@ const ThreeDot = styled.div`
   align-items: center;
   cursor: pointer;
 `;
-
 const UpperMedia = styled.div`
   width: 470px;
   min-height: 200px;
   display: flex;
   justify-content: center;
   align-items: center;
+`;
+const BoardImg = styled.img`
+  width: 100%;
 `;
 // UpperMedia하위내용 해야됌
 
@@ -170,14 +174,16 @@ const PostBtn = styled.button`
   cursor: pointer;
 `;
 
-const Board = ({setIsDeleteModalOpen, setIsDetailOpen}) => {
+const Board = ({setIsDeleteModalOpen, setIsDetailOpen, data}) => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const [toDelete, setToDelete] = useState(false);
   const { setValue, getValues, handleSubmit, register } = useForm();
   // const { mutate:write } = useMutation();
   // const { mutate:hart } = useMutation();
   const deleteModalOpen = () => {
-    setIsDeleteModalOpen(true)
+    dispatch(getUserId(data.id));
+    setIsDeleteModalOpen(true);
   }
   const writeComment = () => {
     // write()
@@ -186,6 +192,7 @@ const Board = ({setIsDeleteModalOpen, setIsDetailOpen}) => {
     // hart()
   }
   const toDetail = () => {
+    dispatch(getUserId(data.id))
     setIsDetailOpen(true)
   }
   const skip = () => {
@@ -199,7 +206,7 @@ const Board = ({setIsDeleteModalOpen, setIsDetailOpen}) => {
           <WriterImgDiv>
             <WriterImg src={pepe} style={{height:"32px",width:"32px"}}/>
           </WriterImgDiv>
-          {`작성자 이름`}
+          {data.username}
         </WriterDiv>
         <ThreeDot onClick={deleteModalOpen}>
           <svg aria-label="옵션 더 보기" color="#262626" fill="#262626" height="24" role="img" viewBox="0 0 24 24" width="24">
@@ -209,7 +216,7 @@ const Board = ({setIsDeleteModalOpen, setIsDetailOpen}) => {
         </ThreeDot>
       </UpperWriterDiv>
       <UpperMedia>
-        {`이미지가 들어갈 자리입니다.`}
+        <BoardImg src={data.postImgUrl[0]}/>
       </UpperMedia>
       <UpperContents>
         <Clicks>
@@ -239,21 +246,20 @@ const Board = ({setIsDeleteModalOpen, setIsDetailOpen}) => {
           </BookMark>
         </Clicks>
         <LikeGuys>
-          {/* 만약 좋아요가 2이상이면 => 여러명이 좋아합니다. 아니면 => 한명이 좋아합니다.  */}
-          {`여러명이 좋아합니까..?`}
+          {data.commentCnt>1 ? "여러명이 좋아합니다" : data.commentCnt===1 ? "1명이 좋아합니다" : "아무도 좋아하지 않아용 ㅋ"}
         </LikeGuys>
         <WriterContent>
           <WriterSpan>
-          {`작성자 박씨`}
+          {data.username}
           </WriterSpan>
-          {`이곳은 작성한 내용이들어간다. 워드 브레잌 설정해놈 ㅋ`}
+          {data.content}
         </WriterContent>
         <Comments onClick={toDetail}>
           댓글 모두 보기
         </Comments>
         <Date>
           {/* 작성날짜 받아와서 표기 */}
-          {`10월 28일`}
+          {`${data.createdAt.slice(5,7)}월 ${data.createdAt.slice(8,10)}일`}
         </Date>
       </UpperContents>
       <WriteDiv>

@@ -3,22 +3,22 @@ import axios from "axios";
 
 // 엑시오스 사용할 일 있으시면 아래의 axiosIns 를 import 해서 쓰시면 됩니다.
 export const axiosIns = axios.create({
-  baseURL: "URL이 아직 정해지지 않았습니다."
+  baseURL: "http://43.201.48.23"
 });
 // 인터셉터로 토큰 담기
-// axiosIns.interceptors.request.use(
-//   (config) => {
-//     const accessToken = localStorage.getItem("access_token");
-//     if (accessToken) {
-//       config.headers["Authorization"] = accessToken;
-//     }
-//     return config;
-//   }
-// )
+axiosIns.interceptors.request.use(
+  (config) => {
+    const accessToken = localStorage.getItem("access_token");
+    if (accessToken) {
+      config.headers["Access_Token"] = accessToken;
+    }
+    return config;
+  }
+)
 
 // 내가한것
 export const postSignUp =  async (userData) => {
-  const { data } = await axiosIns.post("/api/signup", userData);
+  const data = await axiosIns.post("/api/signup", userData);
   return data;
 }
 export const postLogIn = async (userData) => {
@@ -30,11 +30,11 @@ export const postBoard = async (BoardData) => {
   return data;
 }
 export const getBoards = async () => {
-  const data  = await axiosIns.get("/post");
+  const {data}  = await axiosIns.get("/post");
   return data;
 }
 export const getDetailBoard = async (postId) => {
-  const data = await axiosIns.get(`/post/${postId}`);
+  const {data} = await axiosIns.get(`/post/${postId}`);
   return data;
 }
 export const putDetailData = async (postIdWithData) => {
@@ -42,7 +42,7 @@ export const putDetailData = async (postIdWithData) => {
   return data;
 }
 export const deleteBoard = async (postId) => {
-  const data = await axiosIns.delete(`/post/${postId}`);
+  const {data} = await axiosIns.delete(`/post/${postId}`);
   return data;
 }
 export const postLike = async (postId) => {

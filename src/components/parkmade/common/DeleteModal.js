@@ -1,5 +1,8 @@
 import { useEffect, useRef } from "react";
+import { useMutation } from "react-query";
+import { useSelector } from "react-redux";
 import styled from "styled-components";
+import { deleteBoard } from "../../../api";
 
 const Wrap = styled.div`
   position: fixed;
@@ -32,7 +35,17 @@ const InnerDiv = styled.div`
 const DeleteModal = ({isDeleteModalOpen, setIsDeleteModalOpen}) => {
   // 삭제하기 버튼을 누르면 mutate 작동시키고 onSuccess시 alert하나뛰우고 모달창 끔
   // 취소 버튼 누르면 모달창 끔
+  const getUserId = useSelector(state=>state.getIds.userId);
   const modalRef = useRef();
+  const { mutate } = useMutation(deleteBoard, {
+    onSuccess: (res) => {
+      alert("삭제 완료");
+      setIsDeleteModalOpen(false);
+    },
+    onError: () => {
+      alert("삭제 권한이 없습니다.")
+    }
+  });
   const skip = () => {alert("이 기능은 스킵합니다.")}
   const close = () => {setIsDeleteModalOpen(false)}
   useEffect(() => {
@@ -44,6 +57,9 @@ const DeleteModal = ({isDeleteModalOpen, setIsDeleteModalOpen}) => {
       setIsDeleteModalOpen(false);
     }
   };
+  const postDelete = () => {
+    mutate(getUserId)
+  }
   return (
     <Wrap>
       <UpperDiv ref={modalRef}>
@@ -59,8 +75,8 @@ const DeleteModal = ({isDeleteModalOpen, setIsDeleteModalOpen}) => {
         <InnerDiv onClick={skip}>
           링크 복사
         </InnerDiv>
-        <InnerDiv>
-          퍼가기 혹은 삭제하기
+        <InnerDiv onClick={postDelete}>
+          삭제하기
         </InnerDiv>
         <InnerDiv onClick={close} style={{border:"none"}}>
           취소

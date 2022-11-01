@@ -1,9 +1,8 @@
+import Login from "../components/parkmade/loginPage/Login";
 
 function LogInOut() {
   return (
-    <div>
-      LogInOut
-    </div>
+    <Login/>
   );
 }
 
