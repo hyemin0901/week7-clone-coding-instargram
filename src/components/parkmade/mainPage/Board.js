@@ -48,7 +48,6 @@ const ThreeDot = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  position: relative;
   cursor: pointer;
 `;
 
@@ -171,7 +170,7 @@ const PostBtn = styled.button`
   cursor: pointer;
 `;
 
-const Board = ({setIsDeleteModalOpen}) => {
+const Board = ({setIsDeleteModalOpen, setIsDetailOpen}) => {
   const navigate = useNavigate();
   const [toDelete, setToDelete] = useState(false);
   const { setValue, getValues, handleSubmit, register } = useForm();
@@ -187,7 +186,7 @@ const Board = ({setIsDeleteModalOpen}) => {
     // hart()
   }
   const toDetail = () => {
-    // 디테일 보드 뜨게해야됨
+    setIsDetailOpen(true)
   }
   const skip = () => {
     alert("이 기능은 생략합니다.")

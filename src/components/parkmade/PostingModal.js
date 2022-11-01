@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import styled from "styled-components";
 import pepe from "../../img/icons8-monkas-48.png"
@@ -241,7 +241,8 @@ const VIcon = styled.div`
 `;
 
 
-const PostingModal = ({setIsModalOpen}) => {
+const PostingModal = ({isModalOpen, setIsModalOpen}) => {
+  const modalRef = useRef();
   const [firStep, setFirStep] = useState(true);
   const [secStep, setSecStep] = useState(true);
   const [fileList, setFileList] = useState([]);
@@ -275,10 +276,19 @@ const PostingModal = ({setIsModalOpen}) => {
     setFileUrlList([]);
     setValue("text", "")
   }
+  useEffect(() => {
+    document.addEventListener('mousedown', clickModalOutside);
+    return () => {document.removeEventListener('mousedown', clickModalOutside)};
+  });
+  const clickModalOutside = ev => {
+    if (isModalOpen && !modalRef.current.contains(ev.target)) {
+      setIsModalOpen(false);
+    }
+  };
   return (
     <Wrap>
       {firStep ?
-        <FirUpperDiv>
+        <FirUpperDiv ref={modalRef}>
           <TopText>
             새 게시물 만들기
             <NextBtn onClick={nextStepOne}>
@@ -310,7 +320,7 @@ const PostingModal = ({setIsModalOpen}) => {
         </FirUpperDiv>
         :
         secStep ?
-          <FirUpperDiv layoutId="1">
+          <FirUpperDiv layoutId="1" ref={modalRef}>
             <TopText>
               새 게시물 만들기
               <NextBtn onClick={nextStepTwo}>
@@ -322,7 +332,7 @@ const PostingModal = ({setIsModalOpen}) => {
             </GetImgDiv>
           </FirUpperDiv>
           :
-          <SecUpperDiv layoutId="1">
+          <SecUpperDiv layoutId="1" ref={modalRef}>
             <form onSubmit={handleSubmit(submit)}>
               <TopText>
                 새 게시물 만들기

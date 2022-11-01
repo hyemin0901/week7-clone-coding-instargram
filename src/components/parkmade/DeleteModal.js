@@ -1,3 +1,4 @@
+import { useEffect, useRef } from "react";
 import styled from "styled-components";
 
 const Wrap = styled.div`
@@ -28,14 +29,24 @@ const InnerDiv = styled.div`
   font-size: 14px;
 `;
 
-const DeleteModal = ({setIsDeleteModalOpen}) => {
+const DeleteModal = ({isDeleteModalOpen, setIsDeleteModalOpen}) => {
   // 삭제하기 버튼을 누르면 mutate 작동시키고 onSuccess시 alert하나뛰우고 모달창 끔
   // 취소 버튼 누르면 모달창 끔
-  const skip = () => { alert("이 기능은 스킵합니다.") }
-  const close = () => { setIsDeleteModalOpen(false) }
+  const modalRef = useRef();
+  const skip = () => {alert("이 기능은 스킵합니다.")}
+  const close = () => {setIsDeleteModalOpen(false)}
+  useEffect(() => {
+    document.addEventListener('mousedown', clickModalOutside);
+    return () => {document.removeEventListener('mousedown', clickModalOutside)};
+  });
+  const clickModalOutside = ev => {
+    if (isDeleteModalOpen && !modalRef.current.contains(ev.target)) {
+      setIsDeleteModalOpen(false);
+    }
+  };
   return (
     <Wrap>
-      <UpperDiv>
+      <UpperDiv ref={modalRef}>
         <InnerDiv onClick={skip} style={{color:"rgb(237, 73, 86)", fontWeight:"700", fontSize:"14px"}}>
           신고
         </InnerDiv>

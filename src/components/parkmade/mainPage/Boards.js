@@ -11,13 +11,13 @@ const Wrap = styled.div`
 const Div = styled.div`
 `;
 
-const Boards = ({setIsDeleteModalOpen}) => {
+const Boards = ({setIsDeleteModalOpen, setIsDetailOpen}) => {
   const test = [1,2,3,4,5,6]
   // const { isLoading, data } = useQuery();
   return (
     <Wrap>
       <Div>
-        {test.map((prop,index) => <Board setIsDeleteModalOpen={setIsDeleteModalOpen} key={index}/>)}
+        {test.map((prop,index) => <Board setIsDeleteModalOpen={setIsDeleteModalOpen} setIsDetailOpen={setIsDetailOpen} key={index}/>)}
       </Div>
     </Wrap>
   );
