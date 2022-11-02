@@ -1,14 +1,9 @@
 import { configureStore } from "@reduxjs/toolkit";
-
-
-
+import logger from "redux-logger";
+import user from "./modules/userSlice";
 
 const store = configureStore({
-  reducer: {
-    // 예시 입니다.
-    // comments: comments,
-    // details: details,
-  },
+  reducer: {},
 });
 
 export default store;
