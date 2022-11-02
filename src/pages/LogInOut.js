@@ -9,6 +9,7 @@ import img1 from "../img/image1.png"
 import img2 from "../img/image2.png"
 import img3 from "../img/image3.png"
 import img4 from "../img/image4.png"
+import img5 from "../img/backImage.png"
 import CrossfadeImage from "react-crossfade-image"; 
 
 const LogInOut = () => {
@@ -70,22 +71,18 @@ const LogInOut = () => {
   const imgs = [
         img1,img2,img3,img4
   ];
-  const [image, setImage] = useState(0);
+  const [image, setImage] = useState(imgs[0]);
   const [counter, setCounter] = useState(0);
 
     useEffect(
-      () => {
+      () => { 
+        if (counter === 4) {setCounter(0)}
         const interval = setInterval(() => {
           setImage(imgs[counter + 1]);
           setCounter(counter + 1);
           console.log("첫번째사진");
         }, 3000);
-           if (counter > imgs.length) {            
-            // setCounter(0) 
-          clearInterval(interval);
-          console.log("됐나?")
-         }
-        return () => clearInterval(interval);
+        return () => clearInterval(interval); 
       },
       [counter]
     )
@@ -94,11 +91,11 @@ const LogInOut = () => {
     <UpperDiv>
       {logIn ? (
         <Wrap>
-          <PhoneImg src = "https://static.cdninstagram.com/rsrc.php/v3/y4/r/ItTndlZM2n2.png">
-            <CrossfadeImage style={{ width : "250px", height: "539x"}}
+          <PhoneImg/>
+            <FadeImg><CrossfadeImage style={{ width : "250px", height: "539x"}}
                             src= {image || imgs[0]}
-            />
-          </PhoneImg>
+            /></FadeImg>
+          
           <RightWrap>
           <LoginBox>
             <Logo/>
@@ -234,16 +231,22 @@ const RightWrap = styled.div`
   /* row-gap: 15px; */
   `
 
-const PhoneImg = styled(motion.div)`
-  height: 610px;
-  width: 410px;
+const PhoneImg = styled.img`
+  height: 380px;
+  width: 582px;
   border: 1px solid black;
   margin-right: 40px;
+  box-sizing: border-box;
+  background-image: url(https://static.cdninstagram.com/rsrc.php/v3/y4/r/ItTndlZM2n2.png);
 `
 
-// const CrossfadeImage = styled.div`
-
-// `
+const FadeImg = styled.div`
+  border: 2px solid red;
+  width : "50px";
+  height: "539x";
+  margin-left: 150px;
+  
+`
 
 const LoginBox = styled(motion.div)`
   display: flex;
