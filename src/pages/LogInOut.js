@@ -9,7 +9,6 @@ import img1 from "../img/image1.png"
 import img2 from "../img/image2.png"
 import img3 from "../img/image3.png"
 import img4 from "../img/image4.png"
-import img5 from "../img/backImage.png"
 import CrossfadeImage from "react-crossfade-image"; 
 
 const LogInOut = () => {
@@ -48,8 +47,16 @@ const LogInOut = () => {
     setValue("password", "");
     setLogIn(false);
   };
+
+  const toLogin = () => {
+    setValue("username", "");
+    //빈공백으로 설정해둔것
+    setValue("password", "");
+    setLogIn(true);
+  }
+  
   const submitLoginSignUp = (data) => {
-    console.log(data);
+    // console.log(data);
     if (logIn) {
       toLogIn({ "username": data.username, "password": data.password });
       setValue("username", "");
@@ -91,11 +98,12 @@ const LogInOut = () => {
     <UpperDiv>
       {logIn ? (
         <Wrap>
-          <PhoneImg/>
-            <FadeImg><CrossfadeImage style={{ width : "250px", height: "539x"}}
+          <PhoneImg>
+            <FadeImg>
+            <CrossfadeImage style={{ width : "250px", height: "539x"}}
                             src= {image || imgs[0]}
             /></FadeImg>
-          
+          </PhoneImg>
           <RightWrap>
           <LoginBox>
             <Logo/>
@@ -133,9 +141,9 @@ const LogInOut = () => {
           <JoinWrap>
            <BigJoinBox>
           <UpperBox>
-            <Logo/>
+            <JoinLogo/>
             <TopTextBox>친구들의 사진과 동영상을 보려면 가입하세요.</TopTextBox>
-            <BtnFace>Facebook으로 로그인</BtnFace>
+            <BtnFace2>Facebook으로 로그인</BtnFace2>
             <OrLine>또는</OrLine>
           </UpperBox>
           <form onSubmit={handleSubmit(submitLoginSignUp)}>
@@ -162,7 +170,7 @@ const LogInOut = () => {
                       message: "비밀번호 조건을 확인해주세요.",
                     },
                   })}
-                  placeholder="8~16자, 특수문자 사용(!@#$%^&*)"
+                  placeholder="8~16자 대소문자 및 특수문자 사용(!@#$%^&*)"
                 />
                 <br />
                 <Input
@@ -183,15 +191,15 @@ const LogInOut = () => {
                 저희 서비스를 이용하는 사람이 회원님의 연락처 정보를 Instagram에
                 업로드했을 수도 있습니다. 더 알아보기
               </BottomTextBox>
-              <BtnJoin>가입</BtnJoin>
+              <BtnJoin2>가입</BtnJoin2>
             </FormBox>
           </form>
             </BigJoinBox>
-          <JoinBox>
-              <p>
-                계정이 있으신가요? <BtnLogin>로그인</BtnLogin>
-              </p>
-            </JoinBox>
+          <LoginBox2>
+              <BtnBottomLogin>
+                계정이 있으신가요? <BtnLogin2 onClick={toLogin}>로그인</BtnLogin2>
+              </BtnBottomLogin>
+            </LoginBox2>
         </JoinWrap>
         </StWrap>
       )}
@@ -211,6 +219,7 @@ const UpperDiv = styled.div`
 `;
 
 const Wrap = styled.div`
+  width: 100vw;
   align-items: stretch;
   box-sizing: border-box;
   display: flex;
@@ -226,26 +235,34 @@ const RightWrap = styled.div`
   /* border: 2px solid red; */
   justify-content: center;
   height: 538px;
-  position: relative;
   box-sizing: border-box;
   /* row-gap: 15px; */
   `
 
-const PhoneImg = styled.img`
-  height: 380px;
-  width: 582px;
-  border: 1px solid black;
-  margin-right: 40px;
-  box-sizing: border-box;
+const PhoneImg = styled.div`
+  height: 581.15px;
+  background-size: 468.32px 634.15px;
+  flex-basis: 380.32px;
+  background-position: -46px 0;
+  margin-bottom: 12px;
+  /* border: 1px solid black; */
+  margin-right: 32px;
   background-image: url(https://static.cdninstagram.com/rsrc.php/v3/y4/r/ItTndlZM2n2.png);
+  position: relative;
+
 `
 
 const FadeImg = styled.div`
-  border: 2px solid red;
-  width : "50px";
-  height: "539x";
-  margin-left: 150px;
-  
+  /* border: 2px solid red; */
+  height: 538.84px;
+  width: 251px;
+  right:17px;
+  top:25px;
+  margin: 0;
+  padding: 0;
+  position: absolute;
+  vertical-align: baseline;
+  /* margin-left: 150px; */
 `
 
 const LoginBox = styled(motion.div)`
@@ -264,7 +281,7 @@ const LoginBox = styled(motion.div)`
   `;
 
 const Logo = styled.div`
-  margin: 30px 0 20px;
+  margin: 30px 0 15px;
   height: 51px;
   width: 175px;
   background-position: 0px -502px;
@@ -290,7 +307,7 @@ const InputBox = styled.div`
   width: 100%;
   height: 153px;
   box-sizing: border-box;
-  /* border: 1px solid yellow; */
+  /* border: 1px solid black; */
 `;
 
 const Input = styled.input`
@@ -330,7 +347,7 @@ const BtnLogin = styled.button`
 const OrLine = styled.div`
   height: 18px;
   width: 100%;
-  margin: 0 auto;
+  margin: 15px 0 0 0;
   text-align: center;
   border: none;
   padding: 0;
@@ -362,7 +379,7 @@ const BtnForgotPW = styled.button`
 
 const JoinBox = styled.div`
   margin: 15px 0 10px;
-  border: 1px solid red;
+  border: 1px solid blue;
   padding: 25px;
   height: 80px;
   box-sizing: border-box;
@@ -385,58 +402,132 @@ const BtnJoin = styled.button`
 //////////////////////////////////////회원가입
 
 const StWrap = styled.div`
-  /* align-items: center;
-  box-sizing: border-box;
+  /* align-items: center; */
+  /* box-sizing: border-box; */
   display: flex;
-  margin-top: 70px 405px;
+  margin: 250px auto 405px;
   padding: 0;
   justify-content: center;
-  border: 1px solid black;
-  width: 100%;   */
+  /* border: 1px solid red; */
+  width: 100%;  
 `;
 
 const JoinWrap = styled.div`
-  /* width: 350px;
-  height: 570px;
-  align-items: center;
-  border: 1px solid green;  
-  box-sizing: border-box;
+  color: #262626;
   display: flex;
   flex-direction: column;
-  margin-left: auto;
-  margin-right: auto;
-  background-color: rgb(255,255,255);*/
+  flex-grow: 1;
+  justify-content: center;
+  margin-top: 12px;
+  max-width: 350px;
+ 
 `
 
 const BigJoinBox = styled.div`
+  height: 560px;
+  width: 350px;
+  border: 1px solid #dbdbdb;
+  background-color: #ffffff;
+  border-radius: 1px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  font:inherit;
+  font-size: 100%;
+  margin: 0 0 10px;
+  padding: 10px 0;
+  vertical-align: baseline;
 `
 
 const UpperBox = styled.div`
-  /* justify-content: center;
+  justify-content: center;
   align-items: center;
-  border: 1px solid red; */
+  /* border: 1px solid red; */
 `
+
+ const JoinLogo = styled.div`
+  margin: 30px 0 15px 84px;
+  height: 51px;
+  width: 175px;
+  background-position: 0px -502px;
+  background-size: 347px 606px;
+  background-repeat: no-repeat;
+  display: inline-block;
+  background-image: url(https://static.cdninstagram.com/rsrc.php/v3/y1/r/XgiuS2Esj4y.png);
+  `
 
 const TopTextBox = styled.div`
-  /* width: 100%;
-  height: 50px;
+  justify-content: center;
+  width:268px;
+  height: 40px;
   text-align: center;
-  border: 1px solid green;
+  /* border: 1px solid green; */
   color: #8e8e8e;
   font-size: 17px;
-  font-weight: 550 ; */
-`;
+  font-weight: 500 ; 
+  margin-left: 40px;
+`
 
-const BottomTextBox = styled.div`
-  /* margin-top: 20px;
+const BtnFace2 = styled.button`
+  border: none;
+  height: 32.1px ;
+  width: 275px;
+  background-color: #0099FF;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: 500;  
+  color: white;
+  margin-top: 13px;
+  margin-left: 37px;
+`
+
+  const BottomTextBox = styled.div`
+    color : #8e8e8e;
+    line-height: 16px;
+    font-size: 12px;
+    margin: 25px 40px;
+  `
+
+  const BtnJoin2 = styled.button`
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 15px;
   width: 268px;
-  height: 32px;
+  height: 30px;
+  border: none;
+  background-color: #0099FF;
+  border-radius: 4px;
+  font-weight: 500;  
+  color: white;
+  margin-left: 40px;
+`;  
+
+  const LoginBox2 = styled.div`
+  margin: 15px 0 10px;
+  padding: 25px;
+  height: 80px;
   box-sizing: border-box;
   text-align: center;
-  justify-content: center;
-  border: 1px solid red;
-  font-size: 12px;
-  color: #fafafa; 
-   */
-
+  border: 1px solid #dbdbdb;
+  box-sizing: border-box;
+  height: 70px;
+  background-color: rgb(255,255,255);
 `
+
+  const BtnBottomLogin = styled.div`
+  align-items:center ;
+  `
+
+  const BtnLogin2 = styled.button`
+  background-color: #ffffff;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 500;  
+  color: #0099FF;
+  border: none;
+`;
+
+
