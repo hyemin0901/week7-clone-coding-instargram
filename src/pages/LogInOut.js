@@ -56,7 +56,6 @@ const LogInOut = () => {
   }
   
   const submitLoginSignUp = (data) => {
-    // console.log(data);
     if (logIn) {
       toLogIn({ "username": data.username, "password": data.password });
       setValue("username", "");
@@ -87,7 +86,6 @@ const LogInOut = () => {
         const interval = setInterval(() => {
           setImage(imgs[counter + 1]);
           setCounter(counter + 1);
-          console.log("첫번째사진");
         }, 3000);
         return () => clearInterval(interval); 
       },
