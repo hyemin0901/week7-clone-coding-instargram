@@ -60,6 +60,7 @@ const EditBtn = styled.button`
   font-size: 14px;
   font-weight: 600;
   margin-left: 20px;
+  cursor: pointer;
 `;
 const EditImgDiv = styled.div`
   width: 40px;
