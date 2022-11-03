@@ -1,8 +1,11 @@
+
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { RouterProvider } from "react-router-dom";
 import router from "./Router";
+import App from "./App";
+import { QueryClient, QueryClientProvider } from "react-query";
 
 const queryClient = new QueryClient();
 

@@ -16,15 +16,14 @@ axiosIns.interceptors.request.use(
   }
 )
 
-// 내가한것
-export const postSignUp =  async (userData) => {
-  const data = await axiosIns.post("/api/signup", userData);
+export const postSignUp = async (userData) => {
+  const { data } = await axiosIns.post("/api/signup", userData);
   return data;
-}
-export const postLogIn = async (userData) => {
-  const data  = await axiosIns.post("/api/login", userData);
+};
+export const postLogin = async (userData) => {
+  const data = await axiosIns.post("/api/login", userData);
   return data;
-}
+};
 export const postBoard = async (BoardData) => {
   const data  = await axiosIns.post("/post", BoardData);
   return data;
