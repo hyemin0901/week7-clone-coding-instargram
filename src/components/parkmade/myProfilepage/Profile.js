@@ -1,5 +1,6 @@
 import pepe from "../../../img/icons8-monkas-48.png"
 import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
 
 
 const Wrap = styled.div`
@@ -99,7 +100,13 @@ const ProfileThird = styled.div`
 `;
 
 const Profile = () => {
+  const navigate = useNavigate();
   const editProfile = () => { alert("이 기능은 생략합니다.") }
+  const logOut = () => {
+    localStorage.removeItem("access_token");
+    localStorage.removeItem("refresh_token");
+    navigate("/")
+  };
   return (
     <Wrap>
       <div>
@@ -112,8 +119,8 @@ const Profile = () => {
               <IdSpan>
                 {`나의 아이디`}
               </IdSpan>
-              <EditBtn onClick={editProfile}>
-                프로필 편집
+              <EditBtn onClick={logOut}>
+                로그 아웃
               </EditBtn>
               <EditImgDiv>
                 <EditImgBtn onClick={editProfile}>

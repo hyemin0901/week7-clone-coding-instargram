@@ -1,3 +1,4 @@
+import { useOutletContext } from "react-router-dom";
 import styled from "styled-components";
 import EmptyBoards from "./EmptyBoards";
 
@@ -23,21 +24,25 @@ const Board = styled.div`
   justify-content: center;
   align-items: center;
 `;
+const FirImg = styled.img`
+  width: 100%;
+  height: 100%;
+`;
 
 const MyBoards = () => {
-  const test = [];
+  const { data } = useOutletContext();
   // const { isLoading, data } = useQuery();
   return (
     <>
-      {!test.length ? 
+      {!data?.length ? 
         <WrapOne>
           <EmptyBoards/>
         </WrapOne> 
         :
         <WrapTwo>
-          {test.map((prop,index)=>
+          {data.map((prop,index)=>
             <Board key={index}>
-              {prop}
+              <FirImg src={prop.postImgUrl[0]}/>
             </Board>
           )}
         </WrapTwo>

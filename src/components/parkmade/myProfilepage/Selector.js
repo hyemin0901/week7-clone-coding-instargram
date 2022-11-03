@@ -36,7 +36,7 @@ const SelectorSpan = styled.span`
   margin-left: 6px;
 `;
 
-const Selector = () => {
+const Selector = ({data}) => {
   const nowLocation = useLocation().pathname;
   const { id } = useParams();
   return (
@@ -78,7 +78,7 @@ const Selector = () => {
             </Link>
           </SelectorDiv>
         </UpperSelectorDiv>
-        <Outlet/>
+        <Outlet context={{data}}/>
       </UpperDiv>
     </Wrap>
   );

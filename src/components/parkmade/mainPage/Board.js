@@ -6,6 +6,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getUserId } from "../../../store/modules/parkmade/getIds";
+import { postComment, postLike } from "../../../api";
 
 const UpperDiv = styled.div`
   width: 468px;
@@ -58,6 +59,15 @@ const UpperMedia = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  /* position: relative; */
+`;
+const NextBtn = styled.button`
+ position: absolute;
+ right: 10px;
+`;
+const PreviousBtn = styled.button`
+  position: absolute;
+  left: 10px;
 `;
 const BoardImg = styled.img`
   width: 100%;
@@ -178,18 +188,33 @@ const Board = ({setIsDeleteModalOpen, setIsDetailOpen, data}) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [toDelete, setToDelete] = useState(false);
+  const [imgNumber, setImgNumber] = useState(0);
   const { setValue, getValues, handleSubmit, register } = useForm();
-  // const { mutate:write } = useMutation();
-  // const { mutate:hart } = useMutation();
+  const { mutate:hart } = useMutation(postLike, {
+    onSuccess: (res) => {
+      alert("좋아요")
+    }
+  });
+  const { mutate:write } = useMutation(postComment, {
+    onSuccess: (res) => {
+      alert("작성완료")
+    }
+  });
+  const nextClick = () => {
+    // setImgNumber(prev=> prev === data.postImgUrl.length-1 ? data.postImgUrl.length-1 : prev +1 )
+  };
+  const prevClick = () => {
+    // setImgNumber(prev=> prev === 0 ? 0 : prev - 1 )
+  };
   const deleteModalOpen = () => {
     dispatch(getUserId(data.id));
     setIsDeleteModalOpen(true);
   }
-  const writeComment = () => {
-    // write()
+  const writeComment = (data) => {
+    write([data.id,{"comment":data.text}])
   }
   const postHart = () => {
-    // hart()
+    hart({"post_id":"like"})
   }
   const toDetail = () => {
     dispatch(getUserId(data.id))
@@ -198,7 +223,7 @@ const Board = ({setIsDeleteModalOpen, setIsDetailOpen, data}) => {
   const skip = () => {
     alert("이 기능은 생략합니다.")
   }
-  const goToProfile = () => { navigate(`/my-profile/${1}`) }
+  const goToProfile = () => { navigate(`/my-profile/${data.username}`) }
   return (
     <UpperDiv>
       <UpperWriterDiv>
@@ -216,7 +241,17 @@ const Board = ({setIsDeleteModalOpen, setIsDetailOpen, data}) => {
         </ThreeDot>
       </UpperWriterDiv>
       <UpperMedia>
-        <BoardImg src={data.postImgUrl[0]}/>
+        {/* <PreviousBtn onClick={prevClick}>
+          <div style={{ position: "relative" }}>
+            {`<<`}
+          </div>
+        </PreviousBtn>
+        <NextBtn onClick={nextClick}>
+          <div style={{ position: "relative" }}>
+            {`>>`}
+          </div>
+        </NextBtn> */}
+        <BoardImg src={data.postImgUrl[imgNumber]}/>
       </UpperMedia>
       <UpperContents>
         <Clicks>
